@@ -7,11 +7,12 @@
     <parent>
         <groupId>jp.amaterasu_hyouka</groupId>
         <artifactId>amaterasu-plugin-core</artifactId>
-        <version>1.0.3</version>
+        <version>1.0.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>amaterasu-core-spigot-1_12_2</artifactId>
+    <artifactId>amaterasu-plugin-core-spigot-1_12_2</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <properties>
