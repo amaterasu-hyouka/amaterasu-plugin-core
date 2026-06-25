@@ -12,7 +12,7 @@
     </parent>
 
     <artifactId>amaterasu-plugin-core-spigot-1_12_2</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <properties>
