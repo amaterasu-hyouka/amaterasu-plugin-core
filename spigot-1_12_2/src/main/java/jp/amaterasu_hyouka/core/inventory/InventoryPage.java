@@ -10,7 +10,7 @@ import java.util.List;
 public final class InventoryPage {
     private InventoryPage(){}
 
-    public static void setPageItem(InventoryPageLayout layout, Inventory inventory, List<ItemStack> items, int page) {
+    public static void setPageItem(Inventory inventory, InventoryPageLayout layout, List<ItemStack> items, int page) {
         if (page <= 0) throw new IllegalArgumentException("page は 1 以上である必要があります");
 
         int[] slots = layout.contentSlots();
@@ -30,7 +30,7 @@ public final class InventoryPage {
         );
     }
 
-    public static void setPageItem(InventoryPageLayout layout, Inventory inventory, List<ItemStack> items, int page, int maxPage) {
+    public static void setPageItem(Inventory inventory, InventoryPageLayout layout, List<ItemStack> items, int page, int maxPage) {
         if (page <= 0) throw new IllegalArgumentException("page は 1 以上である必要があります");
 
         int[] slots = layout.contentSlots();
