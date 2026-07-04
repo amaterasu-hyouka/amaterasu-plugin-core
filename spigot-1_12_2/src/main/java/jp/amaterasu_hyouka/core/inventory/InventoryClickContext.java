@@ -28,5 +28,5 @@ public class InventoryClickContext {
     public String playerUuid(){return player.getUniqueId().toString();}
     public int slot(){return slot;}
     public ItemStack item(){return item;}
-    public Material material(){return item.getType();}
+    public Material material(){return item == null ? Material.AIR : item.getType();}
 }

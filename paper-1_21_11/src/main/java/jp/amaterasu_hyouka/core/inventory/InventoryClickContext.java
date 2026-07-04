@@ -15,6 +15,6 @@ public record InventoryClickContext(Player player, int slot, ItemStack item) {
     }
 
     public Material material() {
-        return item.getType();
+        return item == null ? Material.AIR : item.getType();
     }
 }
