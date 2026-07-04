@@ -11,7 +11,7 @@ public final class InventoryPage {
     private InventoryPage(){}
 
     public static void setPageItem(Inventory inventory, InventoryPageLayout layout, List<ItemStack> items, int page) {
-        if (page <= 0) throw new IllegalArgumentException("page は 1 以上である必要があります");
+        validatePage(page);
 
         int[] slots = layout.contentSlots();
 
@@ -31,7 +31,7 @@ public final class InventoryPage {
     }
 
     public static void setPageItem(Inventory inventory, InventoryPageLayout layout, List<ItemStack> items, int page, int maxPage) {
-        if (page <= 0) throw new IllegalArgumentException("page は 1 以上である必要があります");
+        validatePage(page);
 
         int[] slots = layout.contentSlots();
 
@@ -47,6 +47,9 @@ public final class InventoryPage {
             ? ItemUtil.createItem(Material.ARROW, page + 1, (page + 1) + "ページ目へ")
             : ItemUtil.createItem(Material.STRUCTURE_VOID)
         );
+    }
+    private static void validatePage(int page) {
+        if (page <= 0)throw new IllegalArgumentException("page は 1 以上である必要があります");
     }
 
     public static boolean isMovePageAction(InventoryPageLayout layout, int slot, Material material){
