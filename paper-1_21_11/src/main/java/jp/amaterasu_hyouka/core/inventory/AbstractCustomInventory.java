@@ -38,7 +38,7 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
 
     @Override
     public void handle(InventoryClickEvent e) {
-        InventoryClickContext c = new InventoryClickContext(e);
+        InventoryClickContext c = InventoryClickContext.from(e);
         runAction(c);
     }
 
