@@ -10,18 +10,32 @@ import java.util.List;
 public final class InventoryPage {
     private InventoryPage(){}
 
+    public static void setPageItem(Inventory inventory, InventoryPageLayout layout, ItemStack[] items, int page) {
+        validatePage(page);
+        int[] slots = layout.contentSlots();
+        int size = Math.min(items.length, slots.length);
+        for(int i = 0; i < size; i++)inventory.setItem(slots[i], items[i]);
+        setPageMoveItem(inventory, layout, page, items.length >= slots.length);
+    }
+    public static void setPageItem(Inventory inventory, InventoryPageLayout layout, ItemStack[] items, int page, int maxPage) {
+        validatePage(page);
+        int[] slots = layout.contentSlots();
+        int size = Math.min(items.length, slots.length);
+        for(int i = 0; i < size; i++)inventory.setItem(slots[i], items[i]);
+        setPageMoveItem(inventory, layout, page, page < maxPage);
+    }
     public static void setPageItem(Inventory inventory, InventoryPageLayout layout, List<ItemStack> items, int page) {
         validatePage(page);
         int[] slots = layout.contentSlots();
         int size = Math.min(items.size(), slots.length);
-        for (int i = 0; i < size; i++) inventory.setItem(slots[i], items.get(i));
+        for(int i = 0; i < size; i++)inventory.setItem(slots[i], items.get(i));
         setPageMoveItem(inventory, layout, page, items.size() >= slots.length);
     }
     public static void setPageItem(Inventory inventory, InventoryPageLayout layout, List<ItemStack> items, int page, int maxPage) {
         validatePage(page);
         int[] slots = layout.contentSlots();
         int size = Math.min(items.size(), slots.length);
-        for (int i = 0; i < size; i++) inventory.setItem(slots[i], items.get(i));
+        for(int i = 0; i < size; i++)inventory.setItem(slots[i], items.get(i));
         setPageMoveItem(inventory, layout, page, page < maxPage);
     }
     private static void validatePage(int page) {
