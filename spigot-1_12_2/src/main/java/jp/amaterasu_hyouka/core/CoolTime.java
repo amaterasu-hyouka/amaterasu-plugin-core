@@ -6,13 +6,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CoolTime {
     private final Task task;
-    private final long time;
+    private final long ticks;
 
     private final Set<UUID> coolTimeSet = ConcurrentHashMap.newKeySet();
 
-    public CoolTime(Task task, long time){
+    public CoolTime(Task task, int seconds){
+        this(task, seconds * 20L);
+    }
+
+    public CoolTime(Task task, long ticks){
         this.task = task;
-        this.time = time;
+        this.ticks = ticks;
     }
 
     public boolean isCoolTime(UUID playerUuid) {
@@ -21,7 +25,7 @@ public class CoolTime {
 
     public void setCoolTime(UUID playerUuid) {
         if (!coolTimeSet.add(playerUuid)) return;
-        task.runAsyncLater(() -> coolTimeSet.remove(playerUuid), time);
+        task.runAsyncLater(() -> coolTimeSet.remove(playerUuid), ticks);
     }
 
     public boolean checkAndSetCoolTime(UUID playerUuid) {
