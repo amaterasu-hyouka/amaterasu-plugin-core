@@ -19,17 +19,20 @@ import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractCustomInventory implements CustomInventoryClickListener {
     protected final CustomInventoryHolder baseHolder;
+    protected final Component baseTitle;
     protected final Inventory baseInventory;
     protected final Map<Integer, Map<Material, Consumer<Player>>> actionMap = new HashMap<>();
 
     protected AbstractCustomInventory(int size, String title) {
         this.baseHolder = new CustomInventoryHolder(this);
-        this.baseInventory = Bukkit.createInventory(baseHolder, size, Component.text(title));
+        this.baseTitle = Component.text(title);
+        this.baseInventory = Bukkit.createInventory(baseHolder, size, baseTitle);
     }
 
     protected AbstractCustomInventory(int size, Component title) {
         this.baseHolder = new CustomInventoryHolder(this);
-        this.baseInventory = Bukkit.createInventory(baseHolder, size, title);
+        this.baseTitle = title;
+        this.baseInventory = Bukkit.createInventory(baseHolder, size, baseTitle);
     }
 
     public void setInventory(Player p) {
