@@ -97,7 +97,8 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
     protected <E extends Enum<E> & InventorySlotItemAction> void registerAction(E element){registerAction(element.slot(), element.item(), element.action());}
     protected <E extends Enum<E> & InventoryItemAction> void registerAction(int slot, E element){registerAction(slot, element.item(), element.action());}
     protected <E extends Enum<E> & InventorySlotItem> void registerAction(E element, Consumer<Player> action){registerAction(element.slot(), element.item(), action);}
-    protected void registerAction(int slot, ItemStack item, Consumer<Player> action){
-        actionMap.computeIfAbsent(slot, k -> new HashMap<>()).put(item.getType(), action);
+    protected void registerAction(int slot, ItemStack item, Consumer<Player> action){registerAction(slot, item.getType(), action);}
+    protected void registerAction(int slot, Material material, Consumer<Player> action){
+        actionMap.computeIfAbsent(slot, k -> new HashMap<>()).put(material, action);
     }
 }
