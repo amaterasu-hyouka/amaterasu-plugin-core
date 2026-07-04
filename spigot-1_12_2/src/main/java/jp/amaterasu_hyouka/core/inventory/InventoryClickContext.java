@@ -10,10 +10,18 @@ public class InventoryClickContext {
     private final int slot;
     private final ItemStack item;
 
-    public InventoryClickContext(InventoryClickEvent e){
-        this.player = (Player) e.getWhoClicked();
-        this.slot = e.getRawSlot();
-        this.item = e.getCurrentItem();
+    private InventoryClickContext(Player player, int slot, ItemStack item) {
+        this.player = player;
+        this.slot = slot;
+        this.item = item;
+    }
+
+    public static InventoryClickContext from(InventoryClickEvent e) {
+        return new InventoryClickContext(
+            (Player) e.getWhoClicked(),
+            e.getRawSlot(),
+            e.getCurrentItem()
+        );
     }
 
     public Player player(){return player;}
