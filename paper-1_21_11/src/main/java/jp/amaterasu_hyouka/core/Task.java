@@ -22,8 +22,11 @@ public class Task {
     public void runAsync(Runnable task) {
         Bukkit.getScheduler().runTaskAsynchronously(plugin, task);
     }
-    public void runAsyncLater(Runnable task, long delaySeconds) {
+    public void runAsyncLater(Runnable task, int delaySeconds) {
         Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, task, delaySeconds * 20L);
+    }
+    public void runAsyncLater(Runnable task, long delayTicks) {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, task, delayTicks);
     }
 
     public void runAsync(Runnable task, Runnable callback) {
