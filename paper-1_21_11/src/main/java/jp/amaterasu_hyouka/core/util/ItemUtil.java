@@ -41,6 +41,14 @@ public final class ItemUtil {
         return item;
     }
 
+    public static ItemStack enchantItem(final ItemStack item) {
+        final ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+        meta.setEnchantmentGlintOverride(true);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     public static ItemStack createPlayerHead(String uuid){return createPlayerHead(UUID.fromString(uuid));}
     public static ItemStack createPlayerHead(UUID uuid) {
         ItemStack item = new ItemStack(Material.PLAYER_HEAD);
