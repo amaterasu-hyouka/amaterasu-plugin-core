@@ -6,8 +6,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 public record InventoryClickContext(Player player, int slot, ItemStack item) {
-    public InventoryClickContext(InventoryClickEvent e) {
-        this((Player) e.getWhoClicked(), e.getRawSlot(), e.getCurrentItem());
+    public static InventoryClickContext from(InventoryClickEvent e){
+        return new InventoryClickContext((Player) e.getWhoClicked(), e.getRawSlot(), e.getCurrentItem());
     }
 
     public String playerUuid() {
@@ -15,6 +15,6 @@ public record InventoryClickContext(Player player, int slot, ItemStack item) {
     }
 
     public Material material() {
-        return item.getType();
+        return item == null ? Material.AIR : item.getType();
     }
 }
