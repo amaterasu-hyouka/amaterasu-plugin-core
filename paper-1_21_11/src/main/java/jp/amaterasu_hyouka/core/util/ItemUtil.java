@@ -1,9 +1,13 @@
 package jp.amaterasu_hyouka.core.util;
 
 import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+
+import java.util.UUID;
 
 public final class ItemUtil {
     private ItemUtil(){}
@@ -34,6 +38,16 @@ public final class ItemUtil {
         meta.displayName(TextUtil.clearItalic(name));
         meta.setMaxStackSize(amount);
         item.setItemMeta(meta);
+        return item;
+    }
+
+    public static ItemStack createPlayerHead(String uuid){return createPlayerHead(UUID.fromString(uuid));}
+    public static ItemStack createPlayerHead(UUID uuid) {
+        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+        if (item.getItemMeta() instanceof SkullMeta meta) {
+            meta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
+            item.setItemMeta(meta);
+        }
         return item;
     }
 }
