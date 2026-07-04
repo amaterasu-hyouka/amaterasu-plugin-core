@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 public abstract class AbstractCustomInventory implements CustomInventoryClickListener {
@@ -55,6 +56,17 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
     protected Consumer<Player> getAction(InventoryClickContext c) {
         Map<Material, Consumer<Player>> slotActions = actionMap.get(c.slot());
         return slotActions != null ? slotActions.get(c.material()) : null;
+    }
+
+    protected Inventory cloneBaseInventory() {
+        Inventory inventory = Bukkit.createInventory(baseHolder, baseInventory.getSize(), baseTitle);
+        inventory.setContents(baseInventory.getContents());
+        return inventory;
+    }
+    protected Inventory cloneBaseInventory(InventoryHolder holder) {
+        Inventory inventory = Bukkit.createInventory(holder, baseInventory.getSize(), baseTitle);
+        inventory.setContents(baseInventory.getContents());
+        return inventory;
     }
 
     protected boolean isNoAction(InventoryClickContext c) {
