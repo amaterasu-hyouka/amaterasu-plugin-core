@@ -1,6 +1,6 @@
 package jp.amaterasu_hyouka.core.command;
 
-import jp.amaterasu_hyouka.core.Permission.ServerPermission;
+import jp.amaterasu_hyouka.core.permission.ServerPermission;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;

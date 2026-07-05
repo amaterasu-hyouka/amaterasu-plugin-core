@@ -1,6 +1,6 @@
 package jp.amaterasu_hyouka.core.command;
 
-import jp.amaterasu_hyouka.core.Permission.ServerPermission;
+import jp.amaterasu_hyouka.core.permission.ServerPermission;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

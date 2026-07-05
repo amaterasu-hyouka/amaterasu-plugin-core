@@ -1,4 +1,4 @@
-package jp.amaterasu_hyouka.core.Permission;
+package jp.amaterasu_hyouka.core.permission;
 
 import org.bukkit.entity.Player;
 
