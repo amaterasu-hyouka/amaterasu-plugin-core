@@ -22,7 +22,7 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
     protected final CustomInventoryHolder baseHolder;
     protected final Component baseTitle;
     protected final Inventory baseInventory;
-    protected final Map<Integer, Map<Material, Consumer<Player>>> actionMap = new HashMap<>();
+    protected final Map<Integer, Map<Material, Consumer<InventoryClickContext>>> actionMap = new HashMap<>();
 
     protected AbstractCustomInventory(int size, String title) {
         this.baseHolder = new CustomInventoryHolder(this);
@@ -47,14 +47,14 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
     }
 
     protected boolean runAction(InventoryClickContext c) {
-        Consumer<Player> action = getAction(c);
+        Consumer<InventoryClickContext> action = getAction(c);
         if (action == null) return false;
-        action.accept(c.player());
+        action.accept(c);
         return true;
     }
 
-    protected Consumer<Player> getAction(InventoryClickContext c) {
-        Map<Material, Consumer<Player>> slotActions = actionMap.get(c.slot());
+    protected Consumer<InventoryClickContext> getAction(InventoryClickContext c) {
+        Map<Material, Consumer<InventoryClickContext>> slotActions = actionMap.get(c.slot());
         return slotActions != null ? slotActions.get(c.material()) : null;
     }
 
@@ -79,9 +79,9 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
 
     protected <E extends Enum<E> & InventorySlotItemAction> void setItemAndRegisterAction(Class<E> elementClass){for(E element : elementClass.getEnumConstants())setItemAndRegisterAction(element);}
     protected <E extends Enum<E> & InventorySlotItemAction> void setItemAndRegisterAction(E element){setItemAndRegisterAction(element.slot(), element.item(), element.action());}
-    protected <E extends Enum<E> & InventorySlotItem> void setItemAndRegisterAction(E element, Consumer<Player> action){setItemAndRegisterAction(element.slot(), element.item(), action);}
+    protected <E extends Enum<E> & InventorySlotItem> void setItemAndRegisterAction(E element, Consumer<InventoryClickContext> action){setItemAndRegisterAction(element.slot(), element.item(), action);}
     protected <E extends Enum<E> & InventoryItemAction> void setItemAndRegisterAction(int slot, E element){setItemAndRegisterAction(slot, element.item(), element.action());}
-    protected void setItemAndRegisterAction(int slot, ItemStack item, Consumer<Player> action){
+    protected void setItemAndRegisterAction(int slot, ItemStack item, Consumer<InventoryClickContext> action){
         setItem(slot, item);
         registerAction(slot, item, action);
     }
@@ -96,9 +96,9 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
 
     protected <E extends Enum<E> & InventorySlotItemAction> void registerAction(E element){registerAction(element.slot(), element.item(), element.action());}
     protected <E extends Enum<E> & InventoryItemAction> void registerAction(int slot, E element){registerAction(slot, element.item(), element.action());}
-    protected <E extends Enum<E> & InventorySlotItem> void registerAction(E element, Consumer<Player> action){registerAction(element.slot(), element.item(), action);}
-    protected void registerAction(int slot, ItemStack item, Consumer<Player> action){registerAction(slot, item.getType(), action);}
-    protected void registerAction(int slot, Material material, Consumer<Player> action){
+    protected <E extends Enum<E> & InventorySlotItem> void registerAction(E element, Consumer<InventoryClickContext> action){registerAction(element.slot(), element.item(), action);}
+    protected void registerAction(int slot, ItemStack item, Consumer<InventoryClickContext> action){registerAction(slot, item.getType(), action);}
+    protected void registerAction(int slot, Material material, Consumer<InventoryClickContext> action){
         actionMap.computeIfAbsent(slot, k -> new HashMap<>()).put(material, action);
     }
 }
