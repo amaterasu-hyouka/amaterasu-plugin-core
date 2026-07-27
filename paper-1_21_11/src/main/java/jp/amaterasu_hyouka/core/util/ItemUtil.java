@@ -1,13 +1,15 @@
 package jp.amaterasu_hyouka.core.util;
 
+import jp.amaterasu_hyouka.core.profile.PlayerProfileCache;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public final class ItemUtil {
     private ItemUtil(){}
@@ -54,13 +56,20 @@ public final class ItemUtil {
         return item;
     }
 
-    public static ItemStack createPlayerHead(String uuid){return createPlayerHead(UUID.fromString(uuid));}
-    public static ItemStack createPlayerHead(UUID uuid) {
-        ItemStack item = new ItemStack(Material.PLAYER_HEAD);
-        if (item.getItemMeta() instanceof SkullMeta meta) {
-            meta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
-            item.setItemMeta(meta);
-        }
-        return item;
+    public static CompletableFuture<ItemStack> createPlayerHead(String uuid){return createPlayerHead(UUID.fromString(uuid));}
+    public static CompletableFuture<ItemStack> createPlayerHead(UUID uuid) {
+        return PlayerProfileCache.get(uuid).thenApply(profile -> {
+            ItemStack item = new ItemStack(Material.PLAYER_HEAD);
+            if (profile != null && item.getItemMeta() instanceof SkullMeta meta) {
+                meta.setPlayerProfile(profile);
+                item.setItemMeta(meta);
+            }
+            return item;
+        });
+    }
+
+    public static void createPlayerHead(String uuid, Consumer<ItemStack> callback){createPlayerHead(UUID.fromString(uuid), callback);}
+    public static void createPlayerHead(UUID uuid, Consumer<ItemStack> callback) {
+        createPlayerHead(uuid).thenAccept(callback);
     }
 }
