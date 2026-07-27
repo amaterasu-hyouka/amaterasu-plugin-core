@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
@@ -25,24 +26,23 @@ public final class ItemUtil {
         return hasNoItem(item) ? DEFAULT_MATERIAL : item.getType();
     }
 
-    public static ItemStack createItem(final Material material) {
-        return createItem(material, 1, Component.empty());
-    }
-
-    public static ItemStack createItem(final Material material, final String name) {
-        return createItem(material, 1, Component.text(name));
-    }
-
-    public static ItemStack createItem(final Material material, final int amount, final String name) {
-        return createItem(material, amount, Component.text(name));
-    }
-
-    public static ItemStack createItem(
-        final Material material, final int amount, final Component name) {
+    public static ItemStack createItem(final Material material){return createItem(material, 1, Component.empty());}
+    public static ItemStack createItem(final Material material, final int amount){return createItem(material, amount, Component.empty());}
+    public static ItemStack createItem(final Material material, final String name){return createItem(material, 1, Component.text(name));}
+    public static ItemStack createItem(final Material material, final String name, final String... lore){return createItem(material, 1, name, lore);}
+    public static ItemStack createItem(final Material material, final Component name){return createItem(material, 1, name);}
+    public static ItemStack createItem(final Material material, final Component name, final Component... lore){return createItem(material, 1, name, lore);}
+    public static ItemStack createItem(final Material material, final int amount, final String name){return createItem(material, amount, Component.text(name));}
+    public static ItemStack createItem(final Material material, final int amount, final String name, final String... lore){return createItem(material, amount, Component.text(name), lore == null ? new Component[0] : Arrays.stream(lore).map(Component::text).toArray(Component[]::new));}
+    public static ItemStack createItem(final Material material, final int amount, final Component name){return createItem(material, amount, name, new Component[0]);}
+    public static ItemStack createItem(final Material material, final int amount, final Component name, final Component... lore) {
         final ItemStack item = new ItemStack(material, amount);
         final ItemMeta meta = item.getItemMeta();
         if (meta == null) return item;
         meta.displayName(TextUtil.clearItalic(name));
+        if (lore != null && lore.length > 0) {
+            meta.lore(Arrays.stream(lore).map(TextUtil::clearItalic).toList());
+        }
         meta.setMaxStackSize(amount);
         item.setItemMeta(meta);
         return item;
