@@ -73,8 +73,10 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
         return c.material() == Material.GRAY_DYE;
     }
 
-    protected <E extends Enum<E> & InventorySlotItem> boolean matchesAction(InventoryClickContext c, E element) {
-        return element.slot() == c.slot() && element.item().getType() == c.material();
+    protected <E extends Enum<E> & InventorySlotItem> boolean matchesAction(InventoryClickContext c, E element) {return matchesAction(c.slot(), c.item(), element);}
+    protected <E extends Enum<E> & InventorySlotItem> boolean matchesAction(int slot, ItemStack item, E element) {return matchesAction(slot, item == null ? Material.AIR : item.getType(), element);}
+    protected <E extends Enum<E> & InventorySlotItem> boolean matchesAction(int slot, Material material, E element) {
+        return element.slot() == slot && element.item().getType() == material;
     }
 
     protected <E extends Enum<E> & InventorySlotItemAction> void setItemAndRegisterAction(Class<E> elementClass){for(E element : elementClass.getEnumConstants())setItemAndRegisterAction(element);}
