@@ -107,4 +107,13 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
         if(slot == -1 || ItemUtil.hasNoItem(item))return;
         inventory.setItem(slot, item);
     }
+
+    // BaseInventoryではなく引数のinventoryにセットする場合に使用する
+    protected <E extends Enum<E> & InventorySlotItem> void setItemInInventory(Inventory inventory, Class<E> elementClass){for(E element : elementClass.getEnumConstants())setItemInInventory(inventory, element);}
+    protected <E extends Enum<E> & InventorySlotItem> void setItemInInventory(Inventory inventory, E element){setItemInInventory(inventory, element.slot(), element.item());}
+    protected <E extends Enum<E> & InventoryItem> void setItemInInventory(Inventory inventory, int slot, E element){setItemInInventory(inventory, slot, element.item());}
+    protected void setItemInInventory(Inventory inventory, int slot, ItemStack item){
+        if (slot == -1 || ItemUtil.hasNoItem(item)) return;
+        inventory.setItem(slot, item);
+    }
 }
