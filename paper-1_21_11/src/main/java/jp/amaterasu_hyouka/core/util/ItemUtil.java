@@ -56,6 +56,24 @@ public final class ItemUtil {
         return item;
     }
 
+    public static ItemStack changeName(final ItemStack item, final String name){return changeName(item, Component.text(name));}
+    public static ItemStack changeName(final ItemStack item, final Component name) {
+        final ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+        meta.displayName(TextUtil.clearItalic(name));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static ItemStack changeLore(final ItemStack item, final String... lore){return changeLore(item, lore == null ? new Component[0] : Arrays.stream(lore).map(Component::text).toArray(Component[]::new));}
+    public static ItemStack changeLore(final ItemStack item, final Component... lore) {
+        final ItemMeta meta = item.getItemMeta();
+        if (meta == null) return item;
+        meta.lore(lore == null || lore.length == 0 ? null : Arrays.stream(lore).map(TextUtil::clearItalic).toList());
+        item.setItemMeta(meta);
+        return item;
+    }
+
     public static CompletableFuture<ItemStack> createPlayerHead(String uuid){return createPlayerHead(UUID.fromString(uuid));}
     public static CompletableFuture<ItemStack> createPlayerHead(UUID uuid) {
         return PlayerProfileCache.get(uuid).thenApply(profile -> {
