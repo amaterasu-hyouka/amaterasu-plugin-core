@@ -12,10 +12,15 @@ import java.util.UUID;
 public final class ItemUtil {
     private ItemUtil(){}
 
-    public static ItemStack AIR = new ItemStack(Material.AIR);
+    public static final ItemStack AIR = new ItemStack(Material.AIR);
+    public static final Material DEFAULT_MATERIAL = Material.STONE;
+    public static final ItemStack DEFAULT = createItem(DEFAULT_MATERIAL);
 
     public static boolean hasNoItem(ItemStack item) {
         return item == null || item.getType().isAir();
+    }
+    public static Material getMaterialOrDefault(ItemStack item){
+        return hasNoItem(item) ? DEFAULT_MATERIAL : item.getType();
     }
 
     public static ItemStack createItem(final Material material) {

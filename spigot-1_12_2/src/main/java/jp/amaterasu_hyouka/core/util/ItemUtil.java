@@ -17,7 +17,15 @@ public class ItemUtil {
     private ItemUtil(){}
 
     public static final ItemStack AIR = createItem(Material.AIR);
-    public static final ItemStack DEFAULT = createItem(Material.STONE);
+    public static final Material DEFAULT_MATERIAL = Material.STONE;
+    public static final ItemStack DEFAULT = createItem(DEFAULT_MATERIAL);
+
+    public static boolean hasNoItem(ItemStack item){
+        return item == null || item.getType() == Material.AIR;
+    }
+    public static Material getMaterialOrDefault(ItemStack item){
+        return hasNoItem(item) ? DEFAULT_MATERIAL : item.getType();
+    }
 
     public static String getEmptyString(String name) {
         if (name == null || name.isEmpty()) return ChatColor.RESET.toString();
@@ -250,9 +258,5 @@ public class ItemUtil {
         } catch (NumberFormatException e) {
             return null;
         }
-    }
-
-    public static boolean hasNoItem(ItemStack item){
-        return item == null || item.getType() == Material.AIR;
     }
 }
