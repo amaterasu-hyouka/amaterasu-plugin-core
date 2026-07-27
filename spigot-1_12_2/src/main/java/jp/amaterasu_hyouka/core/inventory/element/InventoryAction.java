@@ -1,9 +1,9 @@
 package jp.amaterasu_hyouka.core.inventory.element;
 
-import org.bukkit.entity.Player;
+import jp.amaterasu_hyouka.core.inventory.InventoryClickContext;
 
 import java.util.function.Consumer;
 
 public interface InventoryAction {
-    Consumer<Player> action();
+    Consumer<InventoryClickContext> action();
 }
