@@ -10,6 +10,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>paper-26.2</module>
         <module>paper-1_21_11</module>
         <module>spigot-1_12_2</module>
     </modules>
