@@ -11,7 +11,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>amaterasu-plugin-core-paper-26.2</artifactId>
+    <artifactId>amaterasu-plugin-core-paper-26_2</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
