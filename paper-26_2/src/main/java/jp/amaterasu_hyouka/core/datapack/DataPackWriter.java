@@ -62,10 +62,10 @@ public final class DataPackWriter {
         return getDataPackPath(worldPath).resolve("data").resolve(namespaceName).resolve(resourceType.getDirectoryPath()).normalize();
     }
 
-    private Path getDataPackPath(@NotNull Path worldPath) {
+    public Path getDataPackPath(@NotNull Path worldPath) {
         return getWorldRootPath(worldPath).resolve("datapacks").resolve(dataPackName);
     }
-    private Path getWorldRootPath(@NotNull Path worldPath) {
+    public Path getWorldRootPath(@NotNull Path worldPath) {
         Path normalizedWorldPath = worldPath.toAbsolutePath().normalize();
 
         Path currentPath = normalizedWorldPath;
