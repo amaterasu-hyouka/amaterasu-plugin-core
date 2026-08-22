@@ -26,6 +26,9 @@ public class ItemUtil {
     public static boolean hasNoItem(ItemStack item){
         return item == null || item.getType() == Material.AIR;
     }
+    public static boolean hasNoMeta(ItemStack item){
+        return item == null || !item.hasItemMeta();
+    }
 
     public static Material getMaterialOrDefault(ItemStack item){
         return hasNoItem(item) ? DEFAULT_MATERIAL : item.getType();
