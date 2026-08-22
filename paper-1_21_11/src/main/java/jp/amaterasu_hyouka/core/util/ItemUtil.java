@@ -16,14 +16,24 @@ public final class ItemUtil {
     private ItemUtil(){}
 
     public static final ItemStack AIR = new ItemStack(Material.AIR);
+    public static ItemStack airItem(){return AIR.clone();}
+
     public static final Material DEFAULT_MATERIAL = Material.STONE;
     public static final ItemStack DEFAULT = createItem(DEFAULT_MATERIAL);
+    public static ItemStack defaultItem(){return DEFAULT.clone();}
 
     public static boolean hasNoItem(ItemStack item) {
         return item == null || item.getType().isAir();
     }
     public static Material getMaterialOrDefault(ItemStack item){
         return hasNoItem(item) ? DEFAULT_MATERIAL : item.getType();
+    }
+
+    public static ItemStack getItemOrDefault(ItemStack item){
+        return hasNoItem(item) ? defaultItem() : item;
+    }
+    public static ItemStack getItemOrDefault(String materialName){
+        try{return createItem(Material.valueOf(materialName));}catch(Exception exception){return defaultItem();}
     }
 
     public static ItemStack createItem(final Material material){return createItem(material, 1, Component.empty());}
