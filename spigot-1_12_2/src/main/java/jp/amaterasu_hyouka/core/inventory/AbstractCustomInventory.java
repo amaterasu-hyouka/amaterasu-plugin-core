@@ -12,6 +12,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
@@ -56,6 +57,9 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
 
     protected Inventory cloneBaseInventory(){
         return InventoryUtil.cloneInventory(baseHolder, baseInventory);
+    }
+    protected Inventory cloneBaseInventory(InventoryHolder holder) {
+        return InventoryUtil.cloneInventory(holder, baseInventory);
     }
 
     protected <E extends Enum<E> & InventorySlotItem> boolean matchesAction(InventoryClickContext c, E element){return matchesAction(c.slot(), c.item(), element);}
