@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -29,6 +30,12 @@ public class ItemUtil {
     public static boolean hasNoMeta(ItemStack item){
         return item == null || !item.hasItemMeta();
     }
+
+    public static Material getMaterialInMainHand(Player player){return getItemInMainHand(player).getType();}
+    public static Material getMaterialInMainHandOrDefault(Player player){return getMaterialOrDefault(getItemInMainHand(player));}
+
+    public static ItemStack getItemInMainHand(Player player){return player.getInventory().getItemInMainHand();}
+    public static ItemStack getItemInMainHandOrDefault(Player player){return getItemOrDefault(getItemInMainHand(player));}
 
     public static Material getMaterialOrDefault(ItemStack item){
         return hasNoItem(item) ? DEFAULT_MATERIAL : item.getType();

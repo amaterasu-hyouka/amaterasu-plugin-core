@@ -3,6 +3,7 @@ package jp.amaterasu_hyouka.core.util;
 import jp.amaterasu_hyouka.core.profile.PlayerProfileCache;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -28,6 +29,12 @@ public final class ItemUtil {
     public static boolean hasNoMeta(ItemStack item){
         return item == null || !item.hasItemMeta();
     }
+
+    public static Material getMaterialInMainHand(Player player){return getItemInMainHand(player).getType();}
+    public static Material getMaterialInMainHandOrDefault(Player player){return getMaterialOrDefault(getItemInMainHand(player));}
+
+    public static ItemStack getItemInMainHand(Player player){return player.getInventory().getItemInMainHand();}
+    public static ItemStack getItemInMainHandOrDefault(Player player){return getItemOrDefault(getItemInMainHand(player));}
 
     public static Material getMaterialOrDefault(ItemStack item){
         return hasNoItem(item) ? DEFAULT_MATERIAL : item.getType();
