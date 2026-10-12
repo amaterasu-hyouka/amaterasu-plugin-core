@@ -5,7 +5,6 @@ import jp.amaterasu_hyouka.core.inventory.element.InventoryItemAction;
 import jp.amaterasu_hyouka.core.inventory.element.InventorySlotItem;
 import jp.amaterasu_hyouka.core.inventory.element.InventorySlotItemAction;
 import jp.amaterasu_hyouka.core.listener.CustomInventoryClickListener;
-import jp.amaterasu_hyouka.core.util.InventoryUtil;
 import jp.amaterasu_hyouka.core.util.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -22,12 +21,14 @@ import java.util.function.Consumer;
 
 public abstract class AbstractCustomInventory implements CustomInventoryClickListener {
     protected final CustomInventoryHolder baseHolder;
+    protected final String baseTitle;
     protected final Inventory baseInventory;
     protected final Map<Integer, Map<Material, Consumer<InventoryClickContext>>> actionMap = new HashMap<>();
 
     protected AbstractCustomInventory(InventoryRow row, String title) {
         this.baseHolder = new CustomInventoryHolder(this);
-        this.baseInventory = Bukkit.createInventory(baseHolder, row.size(), title);
+        this.baseTitle = title;
+        this.baseInventory = Bukkit.createInventory(baseHolder, row.size(), baseTitle);
     }
 
     public void setInventory(Player p) {
@@ -55,11 +56,13 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
         return slotActions != null ? slotActions.get(c.material()) : null;
     }
 
-    protected Inventory cloneBaseInventory(){
-        return InventoryUtil.cloneInventory(baseHolder, baseInventory);
-    }
-    protected Inventory cloneBaseInventory(InventoryHolder holder) {
-        return InventoryUtil.cloneInventory(holder, baseInventory);
+    protected Inventory cloneBaseInventory(){return cloneBaseInventory(baseHolder, baseTitle);}
+    protected Inventory cloneBaseInventory(InventoryHolder holder){return cloneBaseInventory(holder, baseTitle);}
+    protected Inventory cloneBaseInventory(String title){return cloneBaseInventory(baseHolder, title);}
+    protected Inventory cloneBaseInventory(InventoryHolder holder, String title) {
+        Inventory inventory = Bukkit.createInventory(holder, baseInventory.getSize(), title);
+        inventory.setContents(baseInventory.getContents());
+        return inventory;
     }
 
     protected <E extends Enum<E> & InventorySlotItem> boolean matchesAction(InventoryClickContext c, E element){return matchesAction(c.slot(), c.item(), element);}
