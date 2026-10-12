@@ -13,7 +13,7 @@ public class Task {
         this.plugin = plugin;
     }
 
-    public void runSync(Runnable task) {Bukkit.getScheduler().runTask(plugin, task);}
+    public void runSync(Runnable task){Bukkit.getScheduler().runTask(plugin, task);}
     public void runSyncLater(Runnable task, int delaySeconds){Bukkit.getScheduler().runTaskLater(plugin, task, delaySeconds * 20L);}
     public void runSyncLater(Runnable task, long delayTicks){Bukkit.getScheduler().runTaskLater(plugin, task, delayTicks);}
     public BukkitTask runSyncTimer(Runnable task, int periodSeconds){return runSyncTimer(task, 0L, periodSeconds * 20L);}
@@ -27,9 +27,7 @@ public class Task {
     public BukkitTask runAsyncTimer(Runnable task, int periodSeconds){return runAsyncTimer(task, 0L, periodSeconds * 20L);}
     public BukkitTask runAsyncTimer(Runnable task, long periodTicks){return runAsyncTimer(task, 0L, periodTicks);}
     public BukkitTask runAsyncTimer(Runnable task, int delaySeconds, int periodSeconds){return runAsyncTimer(task, delaySeconds * 20L, periodSeconds * 20L);}
-    public BukkitTask runAsyncTimer(Runnable task, long delayTicks, long periodTicks) {
-        return Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, task, delayTicks, periodTicks);
-    }
+    public BukkitTask runAsyncTimer(Runnable task, long delayTicks, long periodTicks){return Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, task, delayTicks, periodTicks);}
 
     public void runAsync(Runnable task, Runnable callback) {
         runAsync(() -> {
