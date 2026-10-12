@@ -1,9 +1,5 @@
 package jp.amaterasu_hyouka.core.inventory;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Consumer;
-
 import jp.amaterasu_hyouka.core.inventory.element.InventoryItem;
 import jp.amaterasu_hyouka.core.inventory.element.InventoryItemAction;
 import jp.amaterasu_hyouka.core.inventory.element.InventorySlotItem;
@@ -17,6 +13,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Consumer;
 
 public abstract class AbstractCustomInventory implements CustomInventoryClickListener {
     protected final CustomInventoryHolder baseHolder;
@@ -58,13 +58,13 @@ public abstract class AbstractCustomInventory implements CustomInventoryClickLis
         return slotActions != null ? slotActions.get(c.material()) : null;
     }
 
-    protected Inventory cloneBaseInventory() {
-        Inventory inventory = Bukkit.createInventory(baseHolder, baseInventory.getSize(), baseTitle);
-        inventory.setContents(baseInventory.getContents());
-        return inventory;
-    }
-    protected Inventory cloneBaseInventory(InventoryHolder holder) {
-        Inventory inventory = Bukkit.createInventory(holder, baseInventory.getSize(), baseTitle);
+    protected Inventory cloneBaseInventory(){return cloneBaseInventory(baseHolder, baseTitle);}
+    protected Inventory cloneBaseInventory(InventoryHolder holder){return cloneBaseInventory(holder, baseTitle);}
+    protected Inventory cloneBaseInventory(String title){return cloneBaseInventory(Component.text(title));}
+    protected Inventory cloneBaseInventory(Component title){return cloneBaseInventory(baseHolder, title);}
+    protected Inventory cloneBaseInventory(InventoryHolder holder, String title){return cloneBaseInventory(holder, Component.text(title));}
+    protected Inventory cloneBaseInventory(InventoryHolder holder, Component title) {
+        Inventory inventory = Bukkit.createInventory(holder, baseInventory.getSize(), title);
         inventory.setContents(baseInventory.getContents());
         return inventory;
     }
