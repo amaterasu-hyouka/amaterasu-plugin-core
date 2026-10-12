@@ -31,7 +31,10 @@ public class ItemUtil {
         return item == null || !item.hasItemMeta();
     }
 
-    public static Material getMaterialInMainHand(Player player){return getItemInMainHand(player).getType();}
+    public static Material getMaterialInMainHand(Player player){
+        ItemStack item = getItemInMainHand(player);
+        return hasNoItem(item) ? null : item.getType();
+    }
     public static Material getMaterialInMainHandOrDefault(Player player){return getMaterialOrDefault(getItemInMainHand(player));}
 
     public static ItemStack getItemInMainHand(Player player){return player.getInventory().getItemInMainHand();}
