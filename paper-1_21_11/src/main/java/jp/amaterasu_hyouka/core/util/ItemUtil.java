@@ -2,6 +2,7 @@ package jp.amaterasu_hyouka.core.util;
 
 import jp.amaterasu_hyouka.core.profile.PlayerProfileCache;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -29,6 +30,9 @@ public final class ItemUtil {
     public static boolean hasNoMeta(ItemStack item){
         return item == null || !item.hasItemMeta();
     }
+    public static boolean hasNoCustomName(ItemStack item){
+        return hasNoMeta(item) || !item.getItemMeta().hasCustomName();
+    }
 
     public static Material getMaterialInMainHand(Player player){
         ItemStack item = getItemInMainHand(player);
@@ -50,6 +54,14 @@ public final class ItemUtil {
     }
     public static ItemStack getItemOrDefault(String materialName){
         try{return createItem(Material.valueOf(materialName));}catch(Exception exception){return defaultItem();}
+    }
+
+    public static Component getItemCustomName(ItemStack item){
+        return hasNoCustomName(item) ? null : item.getItemMeta().customName();
+    }
+    public static String getItemCustomNameAsString(ItemStack item){
+        Component name = getItemCustomName(item);
+        return name == null ? null : PlainTextComponentSerializer.plainText().serialize(name);
     }
 
     public static ItemStack createItem(final Material material){return createItem(material, 1, Component.empty());}
