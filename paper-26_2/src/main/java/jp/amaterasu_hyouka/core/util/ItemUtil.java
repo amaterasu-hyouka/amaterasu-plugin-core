@@ -39,6 +39,8 @@ public final class ItemUtil {
     public static ItemStack getItemInMainHand(Player player){return player.getInventory().getItemInMainHand();}
     public static ItemStack getItemInMainHandOrDefault(Player player){return getItemOrDefault(getItemInMainHand(player));}
 
+    public static String getMaterialNameOrDefault(ItemStack item){return getMaterialOrDefault(item).name();}
+
     public static Material getMaterialOrDefault(ItemStack item){
         return hasNoItem(item) ? DEFAULT_MATERIAL : item.getType();
     }
